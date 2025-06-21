@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Jogo RPG Simples</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+    .container { background: white; padding: 20px; border-radius: 8px; max-width: 400px; margin: auto; }
+    button { margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Jogo RPG Simples</h1>
+    <label>Nome do personagem: <input type="text" id="nome" /></label><br />
+    <label>Classe: 
+      <select id="classe">
+        <option value="Guerreiro">Guerreiro</option>
+        <option value="Mago">Mago</option>
+        <option value="Arqueiro">Arqueiro</option>
+      </select>
+    </label><br />
+    <button onclick="iniciar()">Iniciar jogo</button>
+    
+    <div id="jogo" style="display:none; margin-top:20px;">
+      <p id="status"></p>
+      <button onclick="batalhar()">Batalhar</button>
+    </div>
+  </div>
+
+  <script>
+    let xp = 0;
+    let nivel = 1;
+
+    function iniciar() {
+      const nome = document.getElementById('nome').value;
+      const classe = document.getElementById('classe').value;
+      if (!nome) {
+        alert('Por favor, digite o nome do personagem.');
+        return;
+      }
+      document.querySelector('.container > h1').textContent = `Olá, ${nome} o ${classe}`;
+      document.getElementById('jogo').style.display = 'block';
+      document.querySelector('button').style.display = 'none';
+      atualizarStatus();
+    }
+
+    function atualizarStatus() {
+      document.getElementById('status').textContent = `Nível: ${nivel} | XP: ${xp}`;
+    }
+
+    function batalhar() {
+      const ganho = Math.floor(Math.random() * 10) + 1;
+      xp += ganho;
+      if (xp >= nivel * 20) {
+        nivel++;
+        xp = 0;
+        alert('Você subiu de nível!');
+      }
+      atualizarStatus();
+    }
+  </script>
+</body>
+</html>
